@@ -1,4 +1,3 @@
-
 import io
 import torch
 import torch.nn as nn
@@ -21,10 +20,10 @@ class AgeRegressor(nn.Module):
     def forward(self, x):
         return self.backbone(x).squeeze(1)
 
-# Load model once on startup (using CPU for serverless)
+# Load model once on startup
 device = torch.device('cpu')
 model = AgeRegressor()
-# Ensure the path is correct for Vercel environment
+# Search for the model in the parent directory
 model_path = os.path.join(os.path.dirname(__file__), '..', 'best_age_model.pth')
 if os.path.exists(model_path):
     model.load_state_dict(torch.load(model_path, map_location=device))
